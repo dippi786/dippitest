@@ -13,3 +13,7 @@ jobs:
   publish-artifacts:
     name: Publish Artifacts for Quicksight and Athena Views
     runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Print Hello from Build
+        run: echo "Hello from build.yml"
