@@ -30,7 +30,7 @@ jobs:
       - name: Build for Dev (if applicable)
         if: steps.target.outputs.target == 'dev'
         run: |
-          echo "Building for dev..."
+          echo "Building for dev...."
           # Add your dev build logic here
 
       - name: Build for Main (if applicable)
