@@ -1,5 +1,5 @@
 # .github/workflows/build.yml
-name: Publish Artifacts for Quicksight and Athena Views
+name: Build
  
 on:
   push:
