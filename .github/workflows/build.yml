@@ -2,19 +2,39 @@
 name: Publish Artifacts for Quicksight and Athena Views
  
 on:
-  pull_request:
-    branches:
-      - dev
-      - main
   push:
     branches:
       - dev
- 
+  pull_request:
+    branches:
+      - main
+
 jobs:
-  publish-artifacts:
-    name: Publish Artifacts for Quicksight and Athena Views
+  build:
+    name: Build
     runs-on: ubuntu-latest
- 
+
     steps:
-      - name: Print Hello from Build
-        run: echo "Hello from build"
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Determine Target
+        id: target
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
+            echo "::set-output name=target::dev"
+          elif [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "::set-output name=target::main"
+          fi
+
+      - name: Build for Dev (if applicable)
+        if: steps.target.outputs.target == 'dev'
+        run: |
+          echo "Building for dev..."
+          # Add your dev build logic here
+
+      - name: Build for Main (if applicable)
+        if: steps.target.outputs.target == 'main'
+        run: |
+          echo "Building for main..."
+          # Add your main build logic here
