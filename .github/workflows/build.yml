@@ -36,5 +36,5 @@ jobs:
       - name: Build for Main (if applicable)
         if: steps.target.outputs.target == 'main'
         run: |
-          echo "Building for main..."
+          echo "Building for main...."
           # Add your main build logic here
