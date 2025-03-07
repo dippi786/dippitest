@@ -1,18 +1,33 @@
 # .github/workflows/deploy-to-env.yml
-name: Deploy to Environment
-
+name: Deploy
 on:
   workflow_run:
-    workflows: ["Quicksight Deployment"]
+    workflows: ["Pre-tf-steps"]
     types:
       - completed
     conclusion: success
 
 jobs:
-  deploy_to_environment:
-    name: Deploy to Environment
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print Hello from Deploy
-        run: echo "Hello from deploy-to-env.yml"
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Determine Target
+        id: target
+        run: echo "::set-output name=target::${{ github.event.workflow_run.conclusion }}"
+
+      - name: Deploy to Dev (if applicable)
+        if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.workflow_run.head_branch == 'dev'
+        run: |
+          echo "Deploying to dev..."
+          # Add your dev deployment logic here
+
+      - name: Deploy to Main (if applicable)
+        if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.workflow_run.head_branch == 'main'
+        run: |
+          echo "Deploying to main..."
+          # Add your main deployment logic here
