@@ -1,6 +1,5 @@
 # .github/workflows/deploy-to-env.yml
-name: Conditional Deployment
-
+name: Deploy
 on:
   workflow_run:
     workflows: ["Pre-tf-steps"]
